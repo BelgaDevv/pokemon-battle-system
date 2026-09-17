@@ -1,0 +1,28 @@
+# --- IDEs & Editores ---
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+bin/
+.vscode/
+
+# --- Build e Compilação ---
+target/
+.gradle/
+build/
+out/
+.mvn/wrapper/maven-wrapper.jar
+
+# --- Cache de Ferramentas e Logs ---
+.sonar/
+.factorypath
+*.log
+
+# --- Docker & Ambiente ---
+.env
+docker-compose.override.yml
+
+# --- Sistema Operacional ---
+.DS_Store
+Thumbs.db
