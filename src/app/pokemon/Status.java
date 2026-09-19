@@ -16,15 +16,7 @@ public class Status {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public StatusEffect getStatusEffect() {
         return statusEffect;
-    }
-
-    public void setStatusEffect(StatusEffect statusEffect) {
-        this.statusEffect = statusEffect;
     }
 }

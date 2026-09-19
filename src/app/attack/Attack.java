@@ -1,5 +1,6 @@
 package app.attack;
 
+import app.pokemon.Status;
 import app.type.Type;
 
 public class Attack {
@@ -9,20 +10,55 @@ public class Attack {
     private int ppCurrent;
     private double damage;
     private Type type;
-    private StatusEffect statusEffect;
+    private Status status;
     private AttackEffect attackEffect;
 
-    //class constructor
     public Attack(AttackEffect attackEffect, double damage, String name, int ppCurrent,
-                  int ppMax, StatusEffect statusEffect, Type type) {
+                  int ppMax, Status status, Type type) {
+
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Attack name cannot be empty.");
+        }
+
+        if (ppMax <= 0) {
+            throw new IllegalArgumentException("PP max must be greater than zero.");
+        }
+
+        if (ppCurrent < 0 || ppCurrent > ppMax) {
+            throw new IllegalArgumentException(
+                    "Current PP must be between zero and max PP.");
+        }
+
+        if (damage < 0) {
+            throw new IllegalArgumentException(
+                    "Damage cannot be negative.");
+        }
+
+        if (type == null) {
+            throw new IllegalArgumentException(
+                    "Attack type cannot be null.");
+        }
 
         this.attackEffect = attackEffect;
         this.damage = damage;
         this.name = name;
         this.ppCurrent = ppCurrent;
         this.ppMax = ppMax;
-        this.statusEffect = statusEffect;
+        this.status = status;
         this.type = type;
+    }
+
+    public boolean canUse() {
+        return ppCurrent > 0;
+    }
+
+    public boolean use() {
+        if (!canUse()) {
+            return false;
+        }
+
+        ppCurrent--;
+        return true;
     }
 
     public AttackEffect getAttackEffect() {
@@ -37,47 +73,27 @@ public class Attack {
         return damage;
     }
 
-    public void setDamage(double damage) {
-        this.damage = damage;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getPpCurrent() {
         return ppCurrent;
     }
 
-    public void setPpCurrent(int ppCurrent) {
-        this.ppCurrent = ppCurrent;
-    }
-
     public int getPpMax() {
         return ppMax;
     }
 
-    public void setPpMax(int ppMax) {
-        this.ppMax = ppMax;
+    public Status getStatus() {
+        return status;
     }
 
-    public StatusEffect getStatusEffect() {
-        return statusEffect;
-    }
-
-    public void setStatusEffect(StatusEffect statusEffect) {
-        this.statusEffect = statusEffect;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Type getType() {
         return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 }

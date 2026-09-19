@@ -1,8 +1,6 @@
 package app.item;
 
-/*
-Item builder
- */
+
 public class Item {
 
     private String name;
