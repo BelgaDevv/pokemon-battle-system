@@ -1,21 +1,32 @@
 package app.arena;
 
+/**
+ * Represents an arena with a specific name and an associated arena effect.
+ */
 public class Arena {
 
-    private String name;
-    private ArenaEffect arenaEffect;
+  private String name;
+  private ArenaEffect arenaEffect;
 
-    public Arena(ArenaEffect arenaEffect, String name) {
-        this.arenaEffect = arenaEffect;
-        this.name = name;
-    }
+  /**
+   * Constructs a new Arena with the specified effect and name.
+   */
+  public Arena(ArenaEffect arenaEffect, String name) {
+    this.arenaEffect = arenaEffect;
+    this.name = name;
+  }
 
-    public ArenaEffect getArenaEffect() {
-        return arenaEffect;
-    }
+  /**
+   * Returns the effect associated with this arena.
+   */
+  public ArenaEffect getArenaEffect() {
+    return arenaEffect;
+  }
 
-    public String getName() {
-        return name;
-    }
-
+  /**
+   * Returns the name of this arena.
+   */
+  public String getName() {
+    return name;
+  }
 }

@@ -3,58 +3,91 @@ package app.trainer;
 import app.item.Item;
 import app.pokemon.Pokemon;
 
+/**
+ * Represents a trainer participating in a battle.
+ */
 public class Trainer {
 
-    private String name;
-    private Pokemon pokemon;
-    private Item[] items;
-    private int itemCount;
+  private String name;
+  private Pokemon pokemon;
+  private Item[] items;
+  private int itemCount;
 
-    public Trainer(String name, Pokemon pokemon, Item[] items) {
-        this.name = name;
-        this.pokemon = pokemon;
-        this.items = items;
-        this.itemCount = 0;
+  /**
+   * Creates a trainer with the specified name, Pokemon, and items.
+   */
+  public Trainer(String name, Pokemon pokemon, Item[] items) {
+    this.name = name;
+    this.pokemon = pokemon;
+    this.items = items;
+    this.itemCount = 0;
+  }
+
+  /**
+   * Checks whether the trainer can use another item.
+   */
+  public boolean canUseItem() {
+    return itemCount < 2;
+  }
+
+  /**
+   * Uses an item if the trainer has not reached the item limit.
+   */
+  public boolean useItem() {
+    if (!canUseItem()) {
+      return false;
     }
 
-    public boolean canUseItem() {
-        return itemCount < 2;
-    }
+    itemCount++;
+    return true;
+  }
 
-    public boolean useItem() {
-        if (!canUseItem()) {
-            return false;
-        }
+  /**
+   * Returns the number of items already used by the trainer.
+   */
+  public int getItemCount() {
+    return itemCount;
+  }
 
-        itemCount++;
-        return true;
-    }
+  /**
+   * Returns the items available to the trainer.
+   */
+  public Item[] getItems() {
+    return items;
+  }
 
-    public int getItemCount() {
-        return itemCount;
-    }
+  /**
+   * Returns the name of the trainer.
+   */
+  public String getName() {
+    return name;
+  }
 
-    public Item[] getItems() {
-        return items;
-    }
+  /**
+   * Sets the name of the trainer.
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  /**
+   * Returns the Pokemon used by the trainer.
+   */
+  public Pokemon getPokemon() {
+    return pokemon;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  /**
+   * Sets the Pokemon used by the trainer.
+   */
+  public void setPokemon(Pokemon pokemon) {
+    this.pokemon = pokemon;
+  }
 
-    public Pokemon getPokemon() {
-        return pokemon;
-    }
-
-    public void setPokemon(Pokemon pokemon) {
-        this.pokemon = pokemon;
-    }
-
-    public void setItems(Item[] items) {
-        this.items = items;
-    }
+  /**
+   * Sets the items available to the trainer.
+   */
+  public void setItems(Item[] items) {
+    this.items = items;
+  }
 }

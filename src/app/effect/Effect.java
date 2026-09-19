@@ -1,6 +1,7 @@
 package app.effect;
-/*
-Work as an image for their implementations
+
+/**
+ * Represents a base interface for effect implementations.
  */
 public interface Effect {
 }

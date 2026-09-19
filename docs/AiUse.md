@@ -1,0 +1,19 @@
+# Declaração de Uso de Inteligência Artificial
+
+Este documento registra o uso de ferramentas de Inteligência Artificial Generativa durante o desenvolvimento deste projeto, em conformidade com as diretrizes da disciplina.
+
+## 1. Informações Gerais
+* **Data:** 18/09/2026
+* **Integrantes do Grupo:** Gabriel Santos, Enzo Jose e Matheus Assis
+* **Ferramentas Utilizadas:** ChatGPT (OpenAI), Gemini (Google) e Claude (Anthropic)
+
+## 2. Escopo e Finalidade do Uso
+A utilização das IAs foi feita de forma pontual e consultiva, servindo como apoio ao aprendizado e auxílio na revisão de código/documentação. As principais finalidades foram:
+1. **Documentação:** Refinamento do texto dos comentários e mensagens de erro do código.
+2. **Revisão e Boas Práticas:** Análise teórica de possíveis erros, auxílio no uso do Checkstyle para padronização de indentação e sugestões para tornar trechos específicos do código mais genéricos (conceitos de POO).
+3. **Modelagem:** Validação conceitual das associações no diagrama de classes.
+
+ Toda a estrutura, lógica principal e implementação do código final foram desenvolvidas integralmente pelos membros da equipe.
+
+## 3. Registro dos Prompts
+Os comandos (prompts) exatos utilizados nas consultas às IAs estão listados no arquivo `prompts.txt`, localizado na raiz deste repositório.

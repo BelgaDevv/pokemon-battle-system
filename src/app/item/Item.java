@@ -1,22 +1,32 @@
 package app.item;
 
-
+/**
+ * Represents an item that can be used during a battle.
+ */
 public class Item {
 
-    private String name;
-    private ItemEffect itemEffect;
+  private String name;
+  private ItemEffect itemEffect;
 
-    // class constructor
-    public Item(ItemEffect itemEffect, String name) {
-        this.itemEffect = itemEffect;
-        this.name = name;
-    }
+  /**
+   * Creates an item with the specified effect and name.
+   */
+  public Item(ItemEffect itemEffect, String name) {
+    this.itemEffect = itemEffect;
+    this.name = name;
+  }
 
-    public ItemEffect getItemEffect() {
-        return itemEffect;
-    }
+  /**
+   * Returns the effect associated with this item.
+   */
+  public ItemEffect getItemEffect() {
+    return itemEffect;
+  }
 
-    public String getName() {
-        return name;
-    }
+  /**
+   * Returns the name of this item.
+   */
+  public String getName() {
+    return name;
+  }
 }

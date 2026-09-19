@@ -6,7 +6,6 @@ import app.attack.Attack;
 import app.attack.AttackEffect;
 import app.attack.StatusEffect;
 import app.battle.Battle;
-import app.Interaction;
 import app.item.Item;
 import app.item.ItemEffect;
 import app.pokemon.Pokemon;
@@ -14,213 +13,218 @@ import app.pokemon.Status;
 import app.trainer.Trainer;
 import app.type.Type;
 
+/**
+ * Provides the entry point for the Pokemon battle application.
+ */
 public class Main {
 
-    public static void main(String[] args) {
+  /**
+   * Starts the application and initializes a battle.
+   */
+  public static void main(String[] args) {
 
-        // =========================
-        // Effects
-        // =========================
 
-        StatusEffect statusEffect = new StatusEffect();
-        AttackEffect attackEffect = null;
-        ItemEffect itemEffect = new ItemEffect();
+    // Effects
 
-        // =========================
-        // Status
-        // =========================
 
-        Status burn = new Status("Burn", statusEffect);
-        Status poison = new Status("Poison", statusEffect);
-        Status paralysis = new Status("Paralysis", statusEffect);
+    StatusEffect statusEffect = new StatusEffect();
+    AttackEffect attackEffect = null;
+    ItemEffect itemEffect = new ItemEffect();
 
-        // =========================
-        // Trainer 1 - Fire
-        // =========================
 
-        Attack fireAttack1 = new Attack(
-                attackEffect,
-                20,
-                "Fire Strike",
-                10,
-                10,
-                burn,
-                Type.FIRE
-        );
+    // Status
 
-        Attack fireAttack2 = new Attack(
-                attackEffect,
-                18,
-                "Flame Hit",
-                15,
-                15,
-                null,
-                Type.FIRE
-        );
 
-        Attack plantAttack1 = new Attack(
-                attackEffect,
-                15,
-                "Leaf Attack",
-                10,
-                10,
-                poison,
-                Type.PLANT
-        );
+    Status burn = new Status("Burn", statusEffect);
+    Status poison = new Status("Poison", statusEffect);
+    Status paralysis = new Status("Paralysis", statusEffect);
 
-        Attack plantAttack2 = new Attack(
-                attackEffect,
-                12,
-                "Vine Hit",
-                20,
-                20,
-                null,
-                Type.PLANT
-        );
 
-        Attack[] firePokemonAttacks = {
-                fireAttack1,
-                fireAttack2,
-                plantAttack1,
-                plantAttack2
-        };
+    // Trainer 1 - Fire
 
-        Pokemon firePokemon = new Pokemon(
-                50,
-                40,
-                100,
-                100,
-                60,
-                Type.FIRE,
-                firePokemonAttacks
-        );
 
-        // =========================
-        // Trainer 2 - Plant
-        // =========================
+    Attack fireAttack1 = new Attack(
+        attackEffect,
+        20,
+        "Fire Strike",
+        10,
+        10,
+        burn,
+        Type.FIRE
+    );
 
-        Attack plantAttack3 = new Attack(
-                attackEffect,
-                20,
-                "Leaf Blade",
-                10,
-                10,
-                poison,
-                Type.PLANT
-        );
+    Attack fireAttack2 = new Attack(
+        attackEffect,
+        18,
+        "Flame Hit",
+        15,
+        15,
+        null,
+        Type.FIRE
+    );
 
-        Attack plantAttack4 = new Attack(
-                attackEffect,
-                18,
-                "Nature Hit",
-                15,
-                15,
-                null,
-                Type.PLANT
-        );
+    Attack plantAttack1 = new Attack(
+        attackEffect,
+        15,
+        "Leaf Attack",
+        10,
+        10,
+        poison,
+        Type.PLANT
+    );
 
-        Attack waterAttack1 = new Attack(
-                attackEffect,
-                20,
-                "Water Strike",
-                10,
-                10,
-                paralysis,
-                Type.WATER
-        );
+    Attack plantAttack2 = new Attack(
+        attackEffect,
+        12,
+        "Vine Hit",
+        20,
+        20,
+        null,
+        Type.PLANT
+    );
 
-        Attack waterAttack2 = new Attack(
-                attackEffect,
-                15,
-                "Water Pulse",
-                15,
-                15,
-                null,
-                Type.WATER
-        );
+    Attack[] firePokemonAttacks = {
+        fireAttack1,
+        fireAttack2,
+        plantAttack1,
+        plantAttack2
+    };
 
-        Attack[] plantPokemonAttacks = {
-                plantAttack3,
-                plantAttack4,
-                waterAttack1,
-                waterAttack2
-        };
+    Pokemon firePokemon = new Pokemon(
+        50,
+        40,
+        100,
+        100,
+        60,
+        Type.FIRE,
+        firePokemonAttacks
+    );
 
-        Pokemon plantPokemon = new Pokemon(
-                45,
-                45,
-                100,
-                100,
-                55,
-                Type.PLANT,
-                plantPokemonAttacks
-        );
 
-        // =========================
-        // Items
-        // =========================
+    // Trainer 2 - Plant
 
-        Item potion1 = new Item(itemEffect, "Potion");
-        Item antidote1 = new Item(itemEffect, "Antidote");
 
-        Item potion2 = new Item(itemEffect, "Potion");
-        Item burnHeal = new Item(itemEffect, "Burn Heal");
+    Attack plantAttack3 = new Attack(
+        attackEffect,
+        20,
+        "Leaf Blade",
+        10,
+        10,
+        poison,
+        Type.PLANT
+    );
 
-        Item[] trainer1Items = {
-                potion1,
-                antidote1
-        };
+    Attack plantAttack4 = new Attack(
+        attackEffect,
+        18,
+        "Nature Hit",
+        15,
+        15,
+        null,
+        Type.PLANT
+    );
 
-        Item[] trainer2Items = {
-                potion2,
-                burnHeal
-        };
+    Attack waterAttack1 = new Attack(
+        attackEffect,
+        20,
+        "Water Strike",
+        10,
+        10,
+        paralysis,
+        Type.WATER
+    );
 
-        // =========================
-        // Trainers
-        // =========================
+    Attack waterAttack2 = new Attack(
+        attackEffect,
+        15,
+        "Water Pulse",
+        15,
+        15,
+        null,
+        Type.WATER
+    );
 
-        Trainer trainer1 = new Trainer(
-                "Trainer 1",
-                firePokemon,
-                trainer1Items
-        );
+    Attack[] plantPokemonAttacks = {
+        plantAttack3,
+        plantAttack4,
+        waterAttack1,
+        waterAttack2
+    };
 
-        Trainer trainer2 = new Trainer(
-                "Trainer 2",
-                plantPokemon,
-                trainer2Items
-        );
+    Pokemon plantPokemon = new Pokemon(
+        45,
+        45,
+        100,
+        100,
+        55,
+        Type.PLANT,
+        plantPokemonAttacks
+    );
 
-        // =========================
-        // Arena
-        // =========================
 
-        ArenaEffect arenaEffect = new ArenaEffect(
-                ArenaEffect.EffectType.HOT_ASPHALT
-        );
+    // Items
 
-        Arena arena = new Arena(
-                arenaEffect,
-                "Hot Asphalt"
-        );
 
-        // =========================
-        // Battle
-        // =========================
+    Item potion1 = new Item(itemEffect, "Potion");
+    Item antidote1 = new Item(itemEffect, "Antidote");
 
-        Battle battle = new Battle(
-                arena,
-                trainer1,
-                trainer2
-        );
+    Item potion2 = new Item(itemEffect, "Potion");
+    Item burnHeal = new Item(itemEffect, "Burn Heal");
 
-        // =========================
-        // Interaction
-        // =========================
+    Item[] trainer1Items = {
+        potion1,
+        antidote1
+    };
 
-        Interaction interaction = new Interaction();
+    Item[] trainer2Items = {
+        potion2,
+        burnHeal
+    };
 
-        interaction.startBattle(battle);
-    }
+
+    // Trainers
+
+
+    Trainer trainer1 = new Trainer(
+        "Trainer 1",
+        firePokemon,
+        trainer1Items
+    );
+
+    Trainer trainer2 = new Trainer(
+        "Trainer 2",
+        plantPokemon,
+        trainer2Items
+    );
+
+
+    // Arena
+
+
+    ArenaEffect arenaEffect = new ArenaEffect(
+        ArenaEffect.EffectType.HOT_ASPHALT
+    );
+
+    Arena arena = new Arena(
+        arenaEffect,
+        "Hot Asphalt"
+    );
+
+
+    // Battle
+
+
+    Battle battle = new Battle(
+        arena,
+        trainer1,
+        trainer2
+    );
+
+
+    // Interaction
+
+    Interaction interaction = new Interaction();
+
+    interaction.startBattle(battle);
+  }
 }
