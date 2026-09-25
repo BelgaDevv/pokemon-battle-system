@@ -22,7 +22,8 @@ public class Main {
    * Starts the application and initializes a battle.
    */
   public static void main(String[] args) {
-
+    java.util.Random sorteador = new java.util.Random();
+    Interaction interaction = new Interaction();
 
     // Effects
 
@@ -161,6 +162,11 @@ public class Main {
         plantPokemonAttacks
     );
 
+    // pokemons
+
+    Pokemon[] pokesaisDisponiveis = { firePokemon, plantPokemon };
+    String[] nomesPokesais = { "CharSal", "BulbaSal" };
+
 
     // Items
 
@@ -185,33 +191,28 @@ public class Main {
     // Trainers
 
 
-    Trainer trainer1 = new Trainer(
-        "Trainer 1",
-        firePokemon,
-        trainer1Items
-    );
+    Pokemon p1 = interaction.chooseInitial("Trainer 1", pokesaisDisponiveis, nomesPokesais);
+    Pokemon p2 = interaction.chooseInitial("Trainer 2", pokesaisDisponiveis, nomesPokesais);
 
-    Trainer trainer2 = new Trainer(
-        "Trainer 2",
-        plantPokemon,
-        trainer2Items
-    );
+    Trainer trainer1 = new Trainer("Trainer 1", p1, trainer1Items);
+    Trainer trainer2 = new Trainer("Trainer 2", p2, trainer2Items);
 
 
     // Arena
 
-
-    ArenaEffect arenaEffect = new ArenaEffect(
-        ArenaEffect.EffectType.HOT_ASPHALT
-    );
-
-    Arena arena = new Arena(
-        arenaEffect,
-        "Hot Asphalt"
-    );
-
-
-    // Battle
+    int numeroArena = sorteador.nextInt(3) + 1;
+    Arena arena;
+    if (numeroArena == 1) {
+      arena = new Arena(new ArenaEffect(ArenaEffect.EffectType.HOT_ASPHALT), "HOT_ASPHALT");
+    } else if (numeroArena == 2) {
+      arena = new Arena(new ArenaEffect(ArenaEffect.EffectType.RAIN_PUDDLE), "RAIN_PUDDLE");
+    } else {
+      arena = new Arena(new ArenaEffect(ArenaEffect.EffectType.CENTRAL_FLOWERBED), "CENTRAL_FLOWERBED");
+    }
+    System.out.println();
+    System.out.println("========================================");
+    System.out.println(" ARENA: " + arena.getName());
+    System.out.println("========================================");
 
 
     Battle battle = new Battle(
@@ -222,8 +223,6 @@ public class Main {
 
 
     // Interaction
-
-    Interaction interaction = new Interaction();
 
     interaction.startBattle(battle);
   }

@@ -20,6 +20,37 @@ public class Interaction {
   }
 
   /**
+   * Permite ao treinador escolher um Pokésal a partir de uma lista de opções disponíveis.
+   */
+  public Pokemon chooseInitial(String trainerName, Pokemon[] disponiveis, String[] nomes) {
+    System.out.println("\n=================================");
+    System.out.println(trainerName + ", escolha seu Pokésal inicial:");
+    System.out.println("=================================");
+
+    for (int i = 0; i < disponiveis.length; i++) {
+      System.out.println((i + 1) + " - " + nomes[i] + " (Tipo: " + disponiveis[i].getType() + ")");
+    }
+    System.out.println("=================================");
+
+    while (true) {
+      System.out.print("Escolha o número do seu Pokésal: ");
+      if (!scanner.hasNextInt()) {
+        scanner.next();
+        System.out.println("Opção inválida. Digite um número válido.");
+        continue;
+      }
+
+      int opcao = scanner.nextInt();
+      if (opcao >= 1 && opcao <= disponiveis.length) {
+        // Retorna uma cópia ou o próprio pokémon escolhido
+        return disponiveis[opcao - 1];
+      }
+
+      System.out.println("Opção inválida.");
+    }
+  }
+
+  /**
    * Starts the battle interaction loop.
    */
   public void startBattle(Battle battle) {
