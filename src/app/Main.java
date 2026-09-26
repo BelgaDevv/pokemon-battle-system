@@ -164,8 +164,8 @@ public class Main {
 
     // pokemons
 
-    Pokemon[] pokesaisDisponiveis = { firePokemon, plantPokemon };
-    String[] nomesPokesais = { "CharSal", "BulbaSal" };
+    Pokemon[] pokesaisDisponiveis = {firePokemon, plantPokemon};
+    String[] nomesPokesais = {"CharSal", "BulbaSal"};
 
 
     // Items

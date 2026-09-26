@@ -1,11 +1,12 @@
 package app.attack;
 
+import app.effect.Effect;
 import app.pokemon.Pokemon;
 
 /**
  * Represents effects that apply status conditions to a Pokemon.
  */
-public class StatusEffect {
+public class StatusEffect implements Effect {
 
   /**
    * Applies burn to the specified Pokemon, reducing its attack by 50 percent.

@@ -1,11 +1,12 @@
 package app.item;
 
+import app.effect.Effect;
 import app.pokemon.Pokemon;
 
 /**
  * Represents effects that can be applied by an item.
  */
-public class ItemEffect {
+public class ItemEffect implements Effect {
 
   /**
    * Restores 20 HP to the specified Pokemon without exceeding its maximum HP.

@@ -1,11 +1,12 @@
 package app.attack;
 
+import app.effect.Effect;
 import app.pokemon.Pokemon;
 
 /**
  * Represents an effect that can modify a Pokemon's attributes.
  */
-public class AttackEffect {
+public class AttackEffect implements Effect {
 
   /**
    * Increases the Pokemon's speed by 10 percent.

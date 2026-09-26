@@ -1,13 +1,14 @@
 package app.arena;
 
 import app.attack.Attack;
+import app.effect.Effect;
 import app.pokemon.Pokemon;
 import app.type.Type;
 
 /**
  * Represents an effect applied by a specific arena.
  */
-public class ArenaEffect {
+public class ArenaEffect implements Effect {
 
   /**
    * Represents the types of effects that can be applied by an arena.
