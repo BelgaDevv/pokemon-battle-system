@@ -162,11 +162,51 @@ public class Main {
         plantPokemonAttacks
     );
 
+    // Pokemon - Water
+
+    Attack waterAttack3 = new Attack(
+        attackEffect,
+        12,
+        "Bubble",
+        20,
+        20,
+        null,
+        Type.WATER
+    );
+
+    Attack waterAttack4 = new Attack(
+        attackEffect,
+        18,
+        "Steam Eruption",
+        15,
+        15,
+        burn,
+        Type.FIRE
+    );
+
+
+    Attack[] waterPokemonAttacks = {
+        waterAttack1,
+        waterAttack2,
+        waterAttack3,
+        waterAttack4
+    };
+
+    Pokemon waterPokemon = new Pokemon(
+        40,
+        50,
+        100,
+        100,
+        50,
+        Type.WATER,
+        waterPokemonAttacks
+    );
+
+
     // pokemons
 
-    Pokemon[] pokesaisDisponiveis = {firePokemon, plantPokemon};
-    String[] nomesPokesais = {"CharSal", "BulbaSal"};
-
+    Pokemon[] pokesaisDisponiveis = {firePokemon, plantPokemon, waterPokemon};
+    String[] nomesPokesais = {"CharSal", "BulbaSal", "SquirtSal"};
 
     // Items
 
@@ -199,7 +239,6 @@ public class Main {
 
 
     // Arena
-
     int numeroArena = sorteador.nextInt(3) + 1;
     Arena arena;
     if (numeroArena == 1) {
@@ -213,7 +252,6 @@ public class Main {
     System.out.println("========================================");
     System.out.println(" ARENA: " + arena.getName());
     System.out.println("========================================");
-
 
     Battle battle = new Battle(
         arena,
