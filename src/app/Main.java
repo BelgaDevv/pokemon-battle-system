@@ -41,7 +41,7 @@ public class Main {
     Status paralysis = new Status("Paralysis", statusEffect);
 
 
-    // Trainer 1 - Fire
+    // Pokemon - Fire
 
 
     Attack fireAttack1 = new Attack(
@@ -102,7 +102,7 @@ public class Main {
     );
 
 
-    // Trainer 2 - Plant
+    // Pokemon - Plant
 
 
     Attack plantAttack3 = new Attack(
