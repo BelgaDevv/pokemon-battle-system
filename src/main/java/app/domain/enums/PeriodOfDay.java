@@ -1,4 +1,6 @@
 package app.domain.enums;
 
-public class PeriodOfDay {
+public enum PeriodOfDay {
+  DAY,
+  NIGHT
 }

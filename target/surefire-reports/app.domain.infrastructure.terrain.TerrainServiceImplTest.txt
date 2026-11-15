@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: app.domain.infrastructure.terrain.TerrainServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.204 s -- in app.domain.infrastructure.terrain.TerrainServiceImplTest

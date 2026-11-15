@@ -1,4 +1,7 @@
 package app.domain.enums;
 
-public class StatusType {
+public enum StatusType {
+  BURN,
+  POISON,
+  PARALYSIS
 }

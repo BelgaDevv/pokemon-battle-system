@@ -1,4 +1,7 @@
 package app.domain.enums;
 
-public class ElementalType {
+public enum ElementalType {
+  FIRE,
+  WATER,
+  GRASS
 }

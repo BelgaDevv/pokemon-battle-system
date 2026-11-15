@@ -1,4 +1,7 @@
 package app.domain.enums;
 
-public class WeatherCondition {
+public enum WeatherCondition {
+  SUNNY,
+  RAINY,
+  CLOUDY
 }

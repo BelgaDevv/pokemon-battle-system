@@ -1,4 +1,8 @@
 package app.domain.effect;
 
-public class AttackEffect {
+/**
+ * Defines an effect that can be triggered by a successful attack.
+ */
+public interface AttackEffect {
+
 }

@@ -1,4 +1,23 @@
 package app.domain.effect;
 
-public class StatusEffect {
+
+import app.domain.enums.StatusType;
+
+/**
+ * Represents a negative status condition applied to a Pokemon.
+ *
+ * Status effects remain active until the affected Pokemon faints
+ * or an appropriate item removes the condition.
+ */
+public abstract class StatusEffect {
+
+  private final StatusType type;
+
+  protected StatusEffect(StatusType type) {
+    this.type = type;
+  }
+
+  public StatusType getType() {
+    return type;
+  }
 }

@@ -1,4 +1,9 @@
 package app.domain.enums;
 
-public class BattleEventType {
+public enum BattleEventType {
+  ATTACK,
+  DAMAGE,
+  STATUS_EFFECT,
+  TERRAIN_EFFECT,
+  ITEM_USE
 }

@@ -1,4 +1,7 @@
 package app.domain.enums;
 
-public class StatType {
+public enum StatType {
+  ATTACK,
+  DEFENSE,
+  SPEED
 }
