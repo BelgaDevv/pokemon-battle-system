@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: app.domain.item.PotionTest
--------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in app.domain.item.PotionTest
