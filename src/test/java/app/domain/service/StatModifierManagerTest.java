@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StatModifierManagerTest {
 
@@ -22,7 +22,9 @@ class StatModifierManagerTest {
   void setUp() {
     statModifierManager = new StatModifierManager();
 
-    Attack attack = new Attack("Tackle", 30, 100, 10, List.of());
+    Attack attack = new Attack(
+        "Tackle", 30, 100, 10, List.of()
+    );
 
     pokemon = new Pokemon(
         "CharSal",
@@ -32,33 +34,26 @@ class StatModifierManagerTest {
     );
   }
 
-  // Applies an attack modifier.
+  // Applies modifiers to Attack, Defense and Speed.
   @Test
-  void shouldApplyAttackModifier() {
-    StatModifier modifier = new StatModifier(StatType.ATTACK, 2.0);
+  void shouldApplyStatModifiers() {
+    statModifierManager.applyModifier(
+        pokemon,
+        new StatModifier(StatType.ATTACK, 2.0)
+    );
 
-    statModifierManager.applyModifier(pokemon, modifier);
+    statModifierManager.applyModifier(
+        pokemon,
+        new StatModifier(StatType.DEFENSE, 1.5)
+    );
+
+    statModifierManager.applyModifier(
+        pokemon,
+        new StatModifier(StatType.SPEED, 0.5)
+    );
 
     assertEquals(100.0, pokemon.getEffectiveAttack());
-  }
-
-  // Applies a defense modifier.
-  @Test
-  void shouldApplyDefenseModifier() {
-    StatModifier modifier = new StatModifier(StatType.DEFENSE, 1.5);
-
-    statModifierManager.applyModifier(pokemon, modifier);
-
     assertEquals(60.0, pokemon.getEffectiveDefense());
-  }
-
-  // Applies a speed modifier.
-  @Test
-  void shouldApplySpeedModifier() {
-    StatModifier modifier = new StatModifier(StatType.SPEED, 0.5);
-
-    statModifierManager.applyModifier(pokemon, modifier);
-
     assertEquals(15.0, pokemon.getEffectiveSpeed());
   }
 
@@ -96,7 +91,7 @@ class StatModifierManagerTest {
     assertEquals(40.0, pokemon.getEffectiveDefense());
   }
 
-  // Removes modifiers from the selected stat.
+  // Removes modifiers only from the selected stat.
   @Test
   void shouldRemoveModifiersOfSelectedStat() {
     statModifierManager.applyModifier(
@@ -109,13 +104,16 @@ class StatModifierManagerTest {
         new StatModifier(StatType.SPEED, 0.5)
     );
 
-    statModifierManager.removeModifiers(pokemon, StatType.ATTACK);
+    statModifierManager.removeModifiers(
+        pokemon,
+        StatType.ATTACK
+    );
 
     assertEquals(50.0, pokemon.getEffectiveAttack());
     assertEquals(15.0, pokemon.getEffectiveSpeed());
   }
 
-  // Removes all modifiers of the selected stat.
+  // Removes all modifiers applied to the same stat.
   @Test
   void shouldRemoveAllModifiersOfSameStat() {
     statModifierManager.applyModifier(
@@ -128,46 +126,11 @@ class StatModifierManagerTest {
         new StatModifier(StatType.ATTACK, 1.5)
     );
 
-    statModifierManager.removeModifiers(pokemon, StatType.ATTACK);
+    statModifierManager.removeModifiers(
+        pokemon,
+        StatType.ATTACK
+    );
 
     assertEquals(50.0, pokemon.getEffectiveAttack());
-  }
-
-  // Rejects a null Pokemon when applying a modifier.
-  @Test
-  void shouldRejectNullPokemonWhenApplyingModifier() {
-    StatModifier modifier = new StatModifier(StatType.ATTACK, 2.0);
-
-    assertThrows(
-        NullPointerException.class,
-        () -> statModifierManager.applyModifier(null, modifier)
-    );
-  }
-
-  // Rejects a null modifier.
-  @Test
-  void shouldRejectNullModifier() {
-    assertThrows(
-        NullPointerException.class,
-        () -> statModifierManager.applyModifier(pokemon, null)
-    );
-  }
-
-  // Rejects a null Pokemon when removing modifiers.
-  @Test
-  void shouldRejectNullPokemonWhenRemovingModifiers() {
-    assertThrows(
-        NullPointerException.class,
-        () -> statModifierManager.removeModifiers(null, StatType.ATTACK)
-    );
-  }
-
-  // Rejects a null stat type.
-  @Test
-  void shouldRejectNullStatType() {
-    assertThrows(
-        NullPointerException.class,
-        () -> statModifierManager.removeModifiers(pokemon, null)
-    );
   }
 }

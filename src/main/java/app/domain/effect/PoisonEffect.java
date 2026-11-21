@@ -5,7 +5,7 @@ import app.domain.enums.StatusType;
 
 /**
  * Represents the poisoned status condition.
- *
+ * <p>
  * Poison causes progressive health loss while active.
  */
 public class PoisonEffect extends StatusEffect {

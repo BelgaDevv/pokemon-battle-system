@@ -43,3 +43,7 @@ dist/
 build/
 out/
 .cache/
+
+# Maven
+
+target/

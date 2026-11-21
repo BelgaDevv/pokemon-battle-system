@@ -3,7 +3,7 @@ package app.domain.effect;
 /**
  * Applies a status condition to a Pokemon when the attack effect
  * is processed during battle.
- *
+ * <p>
  * Stores the status effect that will be applied to the target,
  * such as burn, poison or paralysis.
  */

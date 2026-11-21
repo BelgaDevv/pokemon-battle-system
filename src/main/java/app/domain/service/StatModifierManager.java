@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  * Manages stat modifiers applied to Pokemon during battles.
- *
+ * <p>
  * Delegates modifier storage to the Pokemon model and provides
  * operations to apply and remove temporary attribute changes.
  */

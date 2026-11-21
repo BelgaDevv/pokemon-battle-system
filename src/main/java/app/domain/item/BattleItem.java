@@ -8,9 +8,9 @@ import app.domain.model.Pokemon;
  */
 public interface BattleItem {
 
-  // return the item`s display name
+
   String getName();
 
-  //Applies the item's effect to the target Pokemon.
+
   void use(Pokemon target);
 }

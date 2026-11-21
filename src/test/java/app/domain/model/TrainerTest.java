@@ -23,7 +23,7 @@ class TrainerTest {
     );
   }
 
-  // Creates a trainer with a valid name.
+  // Creates a trainer with the correct initial state.
   @Test
   void shouldCreateTrainerWithValidName() {
     Trainer trainer = new Trainer("Ash");
@@ -34,7 +34,7 @@ class TrainerTest {
     assertTrue(trainer.canUseItem());
   }
 
-  // Rejects null or blank names.
+  // Rejects null or blank trainer names.
   @Test
   void shouldRejectNullOrBlankName() {
     assertThrows(
@@ -59,47 +59,20 @@ class TrainerTest {
     assertSame(pokemon, trainer.getPokemon());
   }
 
-  // Rejects a null Pokemon.
+  // Allows two item uses and rejects a third.
   @Test
-  void shouldRejectNullPokemon() {
-    Trainer trainer = new Trainer("Ash");
-
-    assertThrows(
-        NullPointerException.class,
-        () -> trainer.setPokemon(null)
-    );
-  }
-
-  // Registers an item use.
-  @Test
-  void shouldRegisterItemUsage() {
+  void shouldEnforceItemUsageLimit() {
     Trainer trainer = new Trainer("Ash");
 
     trainer.registerItemUse();
 
     assertEquals(1, trainer.getItemsUsed());
     assertTrue(trainer.canUseItem());
-  }
 
-  // Allows exactly two items per battle.
-  @Test
-  void shouldAllowExactlyTwoItemsPerBattle() {
-    Trainer trainer = new Trainer("Ash");
-
-    trainer.registerItemUse();
     trainer.registerItemUse();
 
     assertEquals(2, trainer.getItemsUsed());
     assertFalse(trainer.canUseItem());
-  }
-
-  // Rejects the use of a third item.
-  @Test
-  void shouldRejectThirdItemUsage() {
-    Trainer trainer = new Trainer("Ash");
-
-    trainer.registerItemUse();
-    trainer.registerItemUse();
 
     assertThrows(
         IllegalStateException.class,

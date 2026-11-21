@@ -3,7 +3,8 @@ package app.domain.effect;
 import app.domain.enums.StatusType;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 class BurnEffectTest {
 

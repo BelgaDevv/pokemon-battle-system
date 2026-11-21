@@ -1,3 +1,4 @@
+
 package app.domain.service;
 
 import app.domain.model.Trainer;
@@ -5,14 +6,16 @@ import app.domain.model.Trainer;
 import java.util.Objects;
 
 /**
- * Determines the initial turn order for a Pokemon battle.
- *
- * Compares the effective speed of each trainer's Pokemon
- * to decide which trainer acts first. Trainer 1 wins
- * speed ties.
+ * Determines which trainer acts first in a battle
+ * based on their Pokemon's effective speed.
  */
 public class TurnManager {
 
+  /**
+   * Compares both Pokemon's effective speed and returns
+   * the trainer who acts first.
+   * Trainer 1 has priority when speeds are equal.
+   */
   public Trainer determineFirstTrainer(
       Trainer trainer1,
       Trainer trainer2

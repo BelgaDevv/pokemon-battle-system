@@ -1,18 +1,21 @@
-package app.domain.effect;
 
+package app.domain.effect;
 
 import app.domain.enums.StatType;
 
 /**
- * Represents a temporary modification applied to a Pokemon's base stats.
- *
- * The modifier uses a multiplier to calculate the effective attribute value.
+ * Defines a temporary multiplier applied to
+ * a Pokemon's Attack, Defense or Speed.
  */
 public class StatModifier {
 
   private final StatType statType;
   private final double multiplier;
 
+  /**
+   * Creates a stat modifier for the specified attribute.
+   * The multiplier must be greater than zero.
+   */
   public StatModifier(StatType statType, double multiplier) {
     if (statType == null) {
       throw new IllegalArgumentException(
@@ -30,10 +33,17 @@ public class StatModifier {
     this.multiplier = multiplier;
   }
 
+  /**
+   * Returns the attribute affected by the modifier.
+   */
   public StatType getStatType() {
     return statType;
   }
 
+  /**
+   * Returns the multiplier used to calculate
+   * the effective attribute value.
+   */
   public double getMultiplier() {
     return multiplier;
   }

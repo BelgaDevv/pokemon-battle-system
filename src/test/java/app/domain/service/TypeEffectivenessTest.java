@@ -1,88 +1,54 @@
+
 package app.domain.service;
 
 import app.domain.enums.ElementalType;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TypeEffectivenessTest {
 
-  private final TypeEffectiveness typeEffectiveness = new TypeEffectiveness();
+  private final TypeEffectiveness typeEffectiveness =
+      new TypeEffectiveness();
 
-  // Applies increased damage against Grass.
-  @Test
-  void shouldReturnDoubleMultiplierForFireAgainstGrass() {
+  // Applies double damage against weaker elemental types.
+  @ParameterizedTest
+  @CsvSource({
+      "FIRE, GRASS",
+      "WATER, FIRE",
+      "GRASS, WATER"
+  })
+  void shouldReturnDoubleMultiplier(
+      ElementalType attacker,
+      ElementalType defender
+  ) {
     assertEquals(
         2.0,
-        typeEffectiveness.calculateMultiplier(
-            ElementalType.FIRE,
-            ElementalType.GRASS
-        )
+        typeEffectiveness.calculateMultiplier(attacker, defender)
     );
   }
 
-  // Applies reduced damage against Water.
-  @Test
-  void shouldReturnHalfMultiplierForFireAgainstWater() {
+  // Applies reduced damage against resistant elemental types.
+  @ParameterizedTest
+  @CsvSource({
+      "FIRE, WATER",
+      "WATER, GRASS",
+      "GRASS, FIRE"
+  })
+  void shouldReturnHalfMultiplier(
+      ElementalType attacker,
+      ElementalType defender
+  ) {
     assertEquals(
         0.5,
-        typeEffectiveness.calculateMultiplier(
-            ElementalType.FIRE,
-            ElementalType.WATER
-        )
+        typeEffectiveness.calculateMultiplier(attacker, defender)
     );
   }
 
-  // Applies increased damage against Fire.
-  @Test
-  void shouldReturnDoubleMultiplierForWaterAgainstFire() {
-    assertEquals(
-        2.0,
-        typeEffectiveness.calculateMultiplier(
-            ElementalType.WATER,
-            ElementalType.FIRE
-        )
-    );
-  }
-
-  // Applies reduced damage against Grass.
-  @Test
-  void shouldReturnHalfMultiplierForWaterAgainstGrass() {
-    assertEquals(
-        0.5,
-        typeEffectiveness.calculateMultiplier(
-            ElementalType.WATER,
-            ElementalType.GRASS
-        )
-    );
-  }
-
-  // Applies increased damage against Water.
-  @Test
-  void shouldReturnDoubleMultiplierForGrassAgainstWater() {
-    assertEquals(
-        2.0,
-        typeEffectiveness.calculateMultiplier(
-            ElementalType.GRASS,
-            ElementalType.WATER
-        )
-    );
-  }
-
-  // Applies reduced damage against Fire.
-  @Test
-  void shouldReturnHalfMultiplierForGrassAgainstFire() {
-    assertEquals(
-        0.5,
-        typeEffectiveness.calculateMultiplier(
-            ElementalType.GRASS,
-            ElementalType.FIRE
-        )
-    );
-  }
-
-  // Applies neutral damage against the same type.
+  // Applies neutral damage against the same elemental type.
   @Test
   void shouldReturnNeutralMultiplierForSameTypes() {
     for (ElementalType type : ElementalType.values()) {
@@ -93,9 +59,9 @@ class TypeEffectivenessTest {
     }
   }
 
-  // Rejects a null attack type.
+  // Rejects null elemental types.
   @Test
-  void shouldRejectNullAttackType() {
+  void shouldRejectNullElementalTypes() {
     assertThrows(
         NullPointerException.class,
         () -> typeEffectiveness.calculateMultiplier(
@@ -103,11 +69,7 @@ class TypeEffectivenessTest {
             ElementalType.GRASS
         )
     );
-  }
 
-  // Rejects a null defender type.
-  @Test
-  void shouldRejectNullDefenderType() {
     assertThrows(
         NullPointerException.class,
         () -> typeEffectiveness.calculateMultiplier(

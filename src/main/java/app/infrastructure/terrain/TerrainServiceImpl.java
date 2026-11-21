@@ -1,8 +1,9 @@
+
 package app.infrastructure.terrain;
 
+import app.domain.application.port.TerrainService;
 import app.domain.enums.PeriodOfDay;
 import app.domain.enums.WeatherCondition;
-import app.domain.port.TerrainService;
 import app.domain.port.WeatherProvider;
 import app.domain.terrain.Arena;
 import app.domain.terrain.TerrainContext;
@@ -13,8 +14,8 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 
 /**
- * Provides terrain effects using the current time
- * and the weather conditions of a battle.
+ * Creates battle environments based on the time of day
+ * and weather conditions, and calculates terrain effects.
  */
 public class TerrainServiceImpl implements TerrainService {
 
@@ -44,6 +45,10 @@ public class TerrainServiceImpl implements TerrainService {
     this.weatherProvider = weatherProvider;
   }
 
+  /**
+   * Creates a battle context using the current time in São Paulo
+   * and the weather provided for the battle.
+   */
   @Override
   public TerrainContext createBattleContext() {
     LocalTime currentTime = LocalTime.now(

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * Controls item usage during Pokemon battles.
- *
+ * <p>
  * Ensures that trainers follow the item usage limit and
  * applies each selected item to their own Pokemon.
  */

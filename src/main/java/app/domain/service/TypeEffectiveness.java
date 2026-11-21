@@ -1,3 +1,4 @@
+
 package app.domain.service;
 
 import app.domain.enums.ElementalType;
@@ -5,14 +6,17 @@ import app.domain.enums.ElementalType;
 import java.util.Objects;
 
 /**
- * Calculates type effectiveness multipliers for Pokemon attacks.
- *
- * Determines whether an attack deals increased, reduced or
- * normal damage based on the attack and target elemental types.
+ * Calculates attack damage multipliers based on
+ * the elemental types of the attack and defender.
  */
 public class TypeEffectiveness {
 
-
+  /**
+   * Calculates elemental effectiveness using Fire, Water
+   * and Grass type advantages.
+   * Returns 2.0 for effective attacks, 0.5 for resisted
+   * attacks and 1.0 for attacks of the same type.
+   */
   public double calculateMultiplier(
       ElementalType attackType,
       ElementalType defenderType

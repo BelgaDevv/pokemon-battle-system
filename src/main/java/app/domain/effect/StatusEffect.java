@@ -5,7 +5,7 @@ import app.domain.enums.StatusType;
 
 /**
  * Represents a negative status condition applied to a Pokemon.
- *
+ * <p>
  * Status effects remain active until the affected Pokemon faints
  * or an appropriate item removes the condition.
  */

@@ -1,22 +1,31 @@
+
 package app.domain.terrain;
 
+import app.domain.enums.WeatherCondition;
+
 /**
- * Represents a slippery terrain with rain puddles.
- *
- * Water attacks receive a 10% damage bonus and a 10%
- * accuracy bonus.
+ * Applies damage and accuracy bonuses to Water attacks
+ * when the weather is rainy.
  */
 public class RainPuddle implements Terrain {
 
+  /**
+   * Calculates terrain bonuses based on the weather.
+   * Rain increases Water damage and accuracy by 10%.
+   */
   @Override
   public TerrainEffect calculateEffect(TerrainContext context) {
+    boolean rainy =
+        context.getWeatherCondition() == WeatherCondition.RAINY;
+
     return new TerrainEffect(
         1.0,
-        1.10,
-        0.10,
+        rainy ? 1.10 : 1.0,
+        rainy ? 0.10 : 0.0,
         0.0
     );
   }
+
 
   @Override
   public String getName() {

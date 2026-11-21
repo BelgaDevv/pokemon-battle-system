@@ -1,3 +1,4 @@
+
 package app.domain.model;
 
 import app.domain.effect.StatModifier;
@@ -11,10 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a Pokemon participating in a battle.
- *
- * Each instance maintains its own health, attacks, status effects
- * and stat modifiers.
+ * Manages a Pokemon's attributes, health, attacks,
+ * status conditions and stat modifiers during battles.
  */
 public class Pokemon {
 
@@ -22,8 +21,6 @@ public class Pokemon {
   private final ElementalType type;
 
   private final int maxHp;
-  private int currentHp;
-
   private final int baseAttack;
   private final int baseDefense;
   private final int baseSpeed;
@@ -32,6 +29,13 @@ public class Pokemon {
   private final List<StatusEffect> statusEffects;
   private final List<StatModifier> statModifiers;
 
+  private int currentHp;
+
+  /**
+   * Creates a Pokemon with its base attributes and attacks.
+   * Initializes its HP to the maximum value and starts
+   * without status effects or stat modifiers.
+   */
   public Pokemon(
       String name,
       ElementalType type,
@@ -80,46 +84,83 @@ public class Pokemon {
     this.statModifiers = new ArrayList<>();
   }
 
+  /**
+   * Returns the Pokemon's name.
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Returns the Pokemon's elemental type.
+   */
   public ElementalType getType() {
     return type;
   }
 
+  /**
+   * Returns the maximum HP.
+   */
   public int getMaxHp() {
     return maxHp;
   }
 
+  /**
+   * Returns the current HP.
+   */
   public int getCurrentHp() {
     return currentHp;
   }
 
+  /**
+   * Returns the base Attack attribute.
+   */
   public int getBaseAttack() {
     return baseAttack;
   }
 
+  /**
+   * Returns the base Defense attribute.
+   */
   public int getBaseDefense() {
     return baseDefense;
   }
 
+  /**
+   * Returns the base Speed attribute.
+   */
   public int getBaseSpeed() {
     return baseSpeed;
   }
 
+  /**
+   * Returns the Attack attribute after applying
+   * all active Attack modifiers.
+   */
   public double getEffectiveAttack() {
     return calculateEffectiveStat(StatType.ATTACK, baseAttack);
   }
 
+  /**
+   * Returns the Defense attribute after applying
+   * all active Defense modifiers.
+   */
   public double getEffectiveDefense() {
     return calculateEffectiveStat(StatType.DEFENSE, baseDefense);
   }
 
+  /**
+   * Returns the Speed attribute after applying
+   * all active Speed modifiers.
+   */
   public double getEffectiveSpeed() {
     return calculateEffectiveStat(StatType.SPEED, baseSpeed);
   }
 
+  /**
+   * Calculates an effective attribute by multiplying
+   * its base value by all matching stat modifiers.
+   */
   private double calculateEffectiveStat(
       StatType statType,
       int baseValue
@@ -135,18 +176,33 @@ public class Pokemon {
     return baseValue * multiplier;
   }
 
+  /**
+   * Returns the available attacks as an unmodifiable list.
+   */
   public List<Attack> getAttacks() {
     return Collections.unmodifiableList(attacks);
   }
 
+  /**
+   * Returns the active status effects
+   * as an unmodifiable list.
+   */
   public List<StatusEffect> getStatusEffects() {
     return Collections.unmodifiableList(statusEffects);
   }
 
+  /**
+   * Returns the active stat modifiers
+   * as an unmodifiable list.
+   */
   public List<StatModifier> getStatModifiers() {
     return Collections.unmodifiableList(statModifiers);
   }
 
+  /**
+   * Reduces HP by the specified amount without going below zero.
+   * Clears status effects and stat modifiers if the Pokemon faints.
+   */
   public void takeDamage(int amount) {
     if (amount < 0) {
       throw new IllegalArgumentException(
@@ -162,6 +218,10 @@ public class Pokemon {
     }
   }
 
+  /**
+   * Restores HP without exceeding the maximum value.
+   * Fainted Pokemon cannot be healed.
+   */
   public void heal(int amount) {
     if (amount < 0) {
       throw new IllegalArgumentException(
@@ -174,16 +234,27 @@ public class Pokemon {
     }
   }
 
+  /**
+   * Checks whether the Pokemon has remaining HP.
+   */
   public boolean isAlive() {
     return currentHp > 0;
   }
 
+  /**
+   * Restores the PP of every available attack
+   * to its maximum value.
+   */
   public void restoreAttacksPP() {
     for (Attack attack : attacks) {
       attack.restorePP();
     }
   }
 
+  /**
+   * Adds a status effect to a living Pokemon.
+   * Prevents duplicate effects of the same type.
+   */
   public void addStatusEffect(StatusEffect effect) {
     if (effect == null) {
       throw new IllegalArgumentException(
@@ -205,17 +276,27 @@ public class Pokemon {
     }
   }
 
+  /**
+   * Checks whether the Pokemon has an active
+   * status effect of the specified type.
+   */
   public boolean hasStatusEffect(StatusType type) {
     return statusEffects.stream()
         .anyMatch(effect -> effect.getType() == type);
   }
 
+  /**
+   * Removes all status effects of the specified type.
+   */
   public void removeStatusEffect(StatusType type) {
     statusEffects.removeIf(
         effect -> effect.getType() == type
     );
   }
 
+  /**
+   * Adds a stat modifier if the Pokemon is alive.
+   */
   public void addStatModifier(StatModifier modifier) {
     if (modifier == null) {
       throw new IllegalArgumentException(
@@ -228,6 +309,10 @@ public class Pokemon {
     }
   }
 
+  /**
+   * Removes all stat modifiers affecting
+   * the specified attribute.
+   */
   public void removeStatModifiers(StatType type) {
     statModifiers.removeIf(
         modifier -> modifier.getStatType() == type

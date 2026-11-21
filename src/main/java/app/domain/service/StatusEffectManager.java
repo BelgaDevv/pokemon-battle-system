@@ -1,3 +1,4 @@
+
 package app.domain.service;
 
 import app.domain.effect.StatModifier;
@@ -11,11 +12,11 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Applies and processes status conditions during Pokemon battles.
+ * Applies status conditions and processes their effects
+ * on Pokemon during battles.
  *
- * Handles burn and poison damage at the end of each turn,
- * applies stat penalties for burn and paralysis, and tracks
- * progressive poison damage for each affected Pokemon.
+ * Handles stat penalties from burn and paralysis,
+ * as well as damage from burn and progressive poison.
  */
 public class StatusEffectManager {
 
@@ -29,7 +30,12 @@ public class StatusEffectManager {
 
   private final Map<Pokemon, Integer> poisonTurnCounts = new IdentityHashMap<>();
 
-
+  /**
+   * Applies a status condition to a living Pokemon.
+   * Burn reduces Attack, paralysis reduces Speed,
+   * and poison initializes progressive damage tracking.
+   * Existing conditions of the same type are not reapplied.
+   */
   public void applyStatusEffect(Pokemon pokemon, StatusEffect statusEffect) {
     Objects.requireNonNull(pokemon, "Pokemon cannot be null.");
     Objects.requireNonNull(statusEffect, "Status effect cannot be null.");
@@ -61,7 +67,11 @@ public class StatusEffectManager {
     }
   }
 
-
+  /**
+   * Processes burn and poison damage at the end of a turn.
+   * Poison damage increases progressively up to its limit.
+   * Stops processing if the Pokemon faints.
+   */
   public void processEndOfTurn(Pokemon pokemon) {
     Objects.requireNonNull(pokemon, "Pokemon cannot be null.");
 
@@ -110,6 +120,10 @@ public class StatusEffectManager {
     }
   }
 
+  /**
+   * Adds a stat modifier if the Pokemon does not
+   * already have a modifier for the same stat.
+   */
   private void addStatModifier(
       Pokemon pokemon,
       StatType statType,
@@ -124,6 +138,10 @@ public class StatusEffectManager {
     }
   }
 
+  /**
+   * Calculates damage as a percentage of maximum HP,
+   * rounding up and ensuring at least one damage point.
+   */
   private int calculatePercentageDamage(
       Pokemon pokemon,
       double percentage

@@ -1,3 +1,4 @@
+
 package app.domain.service;
 
 import app.domain.enums.ElementalType;
@@ -8,17 +9,20 @@ import app.domain.terrain.TerrainEffect;
 import java.util.Objects;
 
 /**
- * Calculates the final damage dealt by a Pokemon attack.
- *
- * Combines the attack power, effective attributes, type
- * effectiveness, terrain modifiers and critical hit multiplier
- * to determine the damage applied to the defending Pokemon.
+ * Calculates attack damage using Pokemon attributes,
+ * elemental effectiveness, terrain effects and critical hits.
  */
 public class DamageCalculator {
 
   private static final double CRITICAL_MULTIPLIER = 1.5;
   private static final double MINIMUM_DAMAGE = 1.0;
 
+  /**
+   * Calculates the final damage of an attack using effective
+   * Attack and Defense, type effectiveness, terrain bonuses
+   * and critical hits.
+   * Rounds the result and ensures at least one damage point.
+   */
   public int calculateDamage(
       Attack attack,
       Pokemon attacker,
@@ -62,6 +66,11 @@ public class DamageCalculator {
     );
   }
 
+  /**
+   * Returns the terrain damage multiplier based on
+   * the attacking Pokemon's elemental type.
+   * Grass attacks use a neutral multiplier.
+   */
   private double getTerrainMultiplier(
       ElementalType attackerType,
       TerrainEffect terrainEffect

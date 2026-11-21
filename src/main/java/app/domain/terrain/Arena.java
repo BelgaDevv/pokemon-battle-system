@@ -1,15 +1,19 @@
+
 package app.domain.terrain;
 
 /**
- * Represents the location where a battle takes place.
- *
- * An arena contains a terrain that determines its combat effects.
+ * Defines the location of a battle and the terrain
+ * responsible for its combat effects.
  */
 public class Arena {
 
   private final String name;
   private final Terrain terrain;
 
+  /**
+   * Creates an arena with a name and a terrain.
+   * Both values must be valid and non-null.
+   */
   public Arena(String name, Terrain terrain) {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(
@@ -27,10 +31,16 @@ public class Arena {
     this.terrain = terrain;
   }
 
+  /**
+   * Returns the name of the arena.
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Returns the terrain associated with the arena.
+   */
   public Terrain getTerrain() {
     return terrain;
   }

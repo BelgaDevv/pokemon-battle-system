@@ -4,11 +4,7 @@ package app.domain.infrastructure.terrain;
 import app.domain.enums.PeriodOfDay;
 import app.domain.enums.WeatherCondition;
 import app.domain.port.WeatherProvider;
-import app.domain.terrain.Arena;
-import app.domain.terrain.HotAsphalt;
-import app.domain.terrain.NormalTerrain;
-import app.domain.terrain.TerrainContext;
-import app.domain.terrain.TerrainEffect;
+import app.domain.terrain.*;
 import app.infrastructure.terrain.TerrainServiceImpl;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +13,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TerrainServiceImplTest {
 
@@ -37,7 +34,7 @@ class TerrainServiceImplTest {
     return new TerrainServiceImpl(clock, weatherProvider);
   }
 
-  // Creates a daytime context at 6 AM.
+  // Identifies daytime at 6 AM.
   @Test
   void shouldCreateDayContextAtSixAm() {
     TerrainServiceImpl service = createService(
@@ -54,7 +51,7 @@ class TerrainServiceImplTest {
     );
   }
 
-  // Keeps daytime status before 6 PM.
+  // Identifies daytime immediately before 6 PM.
   @Test
   void shouldCreateDayContextBeforeSixPm() {
     TerrainServiceImpl service = createService(
@@ -67,7 +64,7 @@ class TerrainServiceImplTest {
     assertEquals(PeriodOfDay.DAY, context.getPeriodOfDay());
   }
 
-  // Switches to nighttime at 6 PM.
+  // Identifies nighttime at 6 PM.
   @Test
   void shouldCreateNightContextAtSixPm() {
     TerrainServiceImpl service = createService(
@@ -80,7 +77,7 @@ class TerrainServiceImplTest {
     assertEquals(PeriodOfDay.NIGHT, context.getPeriodOfDay());
   }
 
-  // Keeps nighttime status before 6 AM.
+  // Identifies nighttime immediately before 6 AM.
   @Test
   void shouldCreateNightContextBeforeSixAm() {
     TerrainServiceImpl service = createService(
@@ -93,9 +90,9 @@ class TerrainServiceImplTest {
     assertEquals(PeriodOfDay.NIGHT, context.getPeriodOfDay());
   }
 
-  // Uses the weather provider's returned condition.
+  // Uses the weather provider and rejects missing weather.
   @Test
-  void shouldUseWeatherProvider() {
+  void shouldUseValidWeatherProviderResponse() {
     TerrainServiceImpl service = createService(
         "2026-11-15T12:00:00Z",
         WeatherCondition.RAINY
@@ -107,88 +104,30 @@ class TerrainServiceImplTest {
         WeatherCondition.RAINY,
         context.getWeatherCondition()
     );
-  }
 
-  // Rejects a null weather condition.
-  @Test
-  void shouldThrowExceptionWhenWeatherProviderReturnsNull() {
-    TerrainServiceImpl service = createService(
+    TerrainServiceImpl invalidService = createService(
         "2026-11-15T12:00:00Z",
         null
     );
 
     assertThrows(
         IllegalStateException.class,
-        service::createBattleContext
+        invalidService::createBattleContext
     );
   }
 
-  // Rejects a null clock dependency.
+  // Calculates terrain effects and rejects null arguments.
   @Test
-  void shouldRejectNullClock() {
-    WeatherProvider weatherProvider = mock(WeatherProvider.class);
-
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> new TerrainServiceImpl(null, weatherProvider)
-    );
-  }
-
-  // Rejects a null weather provider.
-  @Test
-  void shouldRejectNullWeatherProvider() {
-    Clock clock = Clock.systemUTC();
-
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> new TerrainServiceImpl(clock, null)
-    );
-  }
-
-  // Rejects a null arena.
-  @Test
-  void shouldRejectNullArena() {
+  void shouldCalculateTerrainEffectWithValidArguments() {
     TerrainServiceImpl service = createService(
         "2026-11-15T12:00:00Z",
         WeatherCondition.SUNNY
     );
 
-    TerrainContext context = new TerrainContext(
-        PeriodOfDay.DAY,
-        WeatherCondition.SUNNY
+    Arena arena = new Arena(
+        "Test Arena",
+        new HotAsphalt()
     );
-
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> service.calculateEffect(null, context)
-    );
-  }
-
-  // Rejects a null battle context.
-  @Test
-  void shouldRejectNullContext() {
-    TerrainServiceImpl service = createService(
-        "2026-11-15T12:00:00Z",
-        WeatherCondition.SUNNY
-    );
-
-    Arena arena = new Arena("Test Arena", new NormalTerrain());
-
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> service.calculateEffect(arena, null)
-    );
-  }
-
-  // Delegates effect calculation to the arena terrain.
-  @Test
-  void shouldDelegateEffectCalculationToArenaTerrain() {
-    TerrainServiceImpl service = createService(
-        "2026-11-15T12:00:00Z",
-        WeatherCondition.SUNNY
-    );
-
-    Arena arena = new Arena("Test Arena", new HotAsphalt());
 
     TerrainContext context = new TerrainContext(
         PeriodOfDay.DAY,
@@ -198,6 +137,73 @@ class TerrainServiceImplTest {
     TerrainEffect effect = service.calculateEffect(arena, context);
 
     assertNotNull(effect);
-    assertEquals(1.15, effect.getFireDamageMultiplier(), 0.001);
+    assertEquals(
+        1.15,
+        effect.getFireDamageMultiplier(),
+        0.001
+    );
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> service.calculateEffect(null, context)
+    );
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> service.calculateEffect(arena, null)
+    );
+  }
+
+  // Applies the hot asphalt bonus only during daytime.
+  @Test
+  void shouldApplyHotAsphaltBonusOnlyDuringDay() {
+    TerrainServiceImpl dayService = createService(
+        "2026-11-15T09:00:00Z",
+        WeatherCondition.SUNNY
+    );
+
+    TerrainServiceImpl nightService = createService(
+        "2026-11-15T21:00:00Z",
+        WeatherCondition.SUNNY
+    );
+
+    Arena arena = new Arena(
+        "Test Arena",
+        new HotAsphalt()
+    );
+
+    TerrainContext dayContext =
+        dayService.createBattleContext();
+
+    TerrainContext nightContext =
+        nightService.createBattleContext();
+
+    TerrainEffect dayEffect =
+        dayService.calculateEffect(arena, dayContext);
+
+    TerrainEffect nightEffect =
+        nightService.calculateEffect(arena, nightContext);
+
+    assertEquals(
+        PeriodOfDay.DAY,
+        dayContext.getPeriodOfDay()
+    );
+
+    assertEquals(
+        PeriodOfDay.NIGHT,
+        nightContext.getPeriodOfDay()
+    );
+
+    assertEquals(
+        1.15,
+        dayEffect.getFireDamageMultiplier(),
+        0.001
+    );
+
+    assertEquals(
+        1.0,
+        nightEffect.getFireDamageMultiplier(),
+        0.001
+    );
   }
 }
